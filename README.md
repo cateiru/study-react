@@ -1,1 +1,5 @@
-# study-react
+# Study React
+
+```bash
+npx create-react-app [dir name] --typescript
+```
