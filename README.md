@@ -1,5 +1,5 @@
 # Study React
 
 ```bash
-npx create-react-app [dir name] --typescript
+npx create-react-app [dir name] --template typescript
 ```
