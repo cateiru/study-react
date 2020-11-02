@@ -2,16 +2,22 @@ import React, {FormEvent} from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import {generate} from './generateUrl'
+import CopyToClipBoard from 'react-copy-to-clipboard'
+
 
 interface idols {
-  names: string[]
+  names: string[],
+  value: string,
+  copied: boolean
 }
 
-class CreateURL extends React.Component<idols, idols> {
-  constructor(props: idols){
+class CreateURL extends React.Component<{}, idols> {
+  constructor(props: {}){
     super(props)
     this.state = {
-      names: props.names
+      names: [],
+      value: '',
+      copied: false
     }
 
     this.addIdol = this.addIdol.bind(this)
@@ -25,24 +31,32 @@ class CreateURL extends React.Component<idols, idols> {
         return {names: state.names.concat(name)}
       })
     }
+
+    this.setState(state => {
+      return {value: generate(state.names)}
+    })
   }
 
   render() {
     return(
       <div>
         <div>
-          {generate(this.state.names)}
+          {this.state.value}
         </div>
         <button onClick={this.addIdol} data-name="korone">
           this click
         </button>
+        <CopyToClipBoard text={this.state.value}
+          onCopy={() => this.setState({copied: true})}>
+          <button>Copy to clipboard with button</button>
+        </CopyToClipBoard>
       </div>
     )
   }
 }
 
 ReactDOM.render(
-  <CreateURL names={[]} />,
+  <CreateURL />,
   document.getElementById('root')
 );
 
