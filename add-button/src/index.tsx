@@ -7,6 +7,7 @@ import CopyToClipBoard from 'react-copy-to-clipboard'
 
 interface idols {
   names: string[],
+  isCheck: boolean[],
   value: string,
   copied: boolean
 }
@@ -16,6 +17,7 @@ class CreateURL extends React.Component<{}, idols> {
     super(props)
     this.state = {
       names: [],
+      isCheck: [false],
       value: '',
       copied: false
     }
@@ -33,7 +35,10 @@ class CreateURL extends React.Component<{}, idols> {
     }
 
     this.setState(state => {
-      return {value: generate(state.names)}
+      return {
+        value: generate(state.names),
+        isCheck: [true]
+      }
     })
   }
 
@@ -43,12 +48,14 @@ class CreateURL extends React.Component<{}, idols> {
         <div>
           {this.state.value}
         </div>
-        <button onClick={this.addIdol} data-name="korone">
+        <input type="checkbox" checked={this.state.isCheck[0]} onChange={this.addIdol} data-name="korone" />
+
+        <button onClick={this.addIdol} data-name="korone" id="korone-">
           this click
         </button>
         <CopyToClipBoard text={this.state.value}
           onCopy={() => this.setState({copied: true})}>
-          <button>Copy to clipboard with button</button>
+          <button>{this.state.copied ? 'copied' : 'copy'}</button>
         </CopyToClipBoard>
       </div>
     )
